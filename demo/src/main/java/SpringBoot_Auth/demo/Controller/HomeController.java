@@ -27,7 +27,7 @@ public class HomeController {
     @GetMapping("/home-page")
     public String HomePage(){
         return "YOU ARE IN THE HOME PAGE";
-    }
+    } 
     
     @PostMapping("/register-user")
     public String registeruser(@RequestBody User user){
