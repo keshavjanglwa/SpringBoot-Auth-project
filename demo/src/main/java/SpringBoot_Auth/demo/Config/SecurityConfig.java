@@ -40,8 +40,8 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/home/**").permitAll()
-                .requestMatchers("/api/v1/user/**").hasAnyRole("USER", "ADMIN")
-                .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
+                .requestMatchers("/user/**").hasAnyAuthority("USER", "ADMIN")
+                .requestMatchers("/admin/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
             )
             .httpBasic(basic -> {});
