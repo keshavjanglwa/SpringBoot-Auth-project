@@ -28,12 +28,6 @@ public class HomeController {
     public String HomePage(){
         return "YOU ARE IN THE HOME PAGE";
     } 
-    
-    @PostMapping("/register-user")
-    public String registeruser(@RequestBody User user){
-    userService.registerNewUser(user.getFullname() , user.getEmail() ,user.getPassword());
-        return "User is save";
-    }
     @PostMapping("/register-admin")
     public String registerAdmin(@RequestBody User admin){
     userService.registerNewAdmin(admin.getFullname() , admin.getEmail() ,admin.getPassword());
