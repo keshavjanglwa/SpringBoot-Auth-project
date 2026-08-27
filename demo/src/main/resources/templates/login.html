@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Login - BookNest</title>
+    <title>Login-page</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
@@ -10,12 +10,8 @@
 <section class="section">
     <div class="form-card">
         <h2>Welcome Back</h2>
+        <div class="alert alert-error" th:if="${param.error}">Invalid email or password. Please try again.</div>
 
-        <!-- <div class="alert alert-success" th:if="${success}" th:text="${success}"></div>
-        <div class="alert alert-error" th:if="${param.error}">Invalid email or password. Please try again.</div> -->
-
-        <!-- loginProcessingUrl in SecurityConfig is "/login", and it reads fields
-             named "email" and "password" (configured via usernameParameter/passwordParameter). -->
         <form th:action="@{/login}" method="post">
             <div class="form-group">
                 <label for="email">Email</label>
@@ -28,11 +24,10 @@
             <button type="submit" class="btn btn-full">Sign In</button>
         </form>
 
-        <!-- <div class="form-footer">
-            Don't have an account? <a href="/register">Sign up here</a>
-        </div> -->
+        <div class="form-footer">
+            Don't have an account? <a href="/register-user">Sign up here</a>
+        </div>
     </div>
 </section>
-
 </body>
 </html>
