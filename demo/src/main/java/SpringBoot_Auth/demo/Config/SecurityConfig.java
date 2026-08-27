@@ -39,12 +39,22 @@ public class SecurityConfig {
          http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/home/**").permitAll()
+                .requestMatchers("/home/**" , "/login" , "/css/**" , "/js/**" , "/error").permitAll()
                 .requestMatchers("/user/**").hasAnyAuthority("USER", "ADMIN")
                 .requestMatchers("/admin/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
-            )
-            .httpBasic(basic -> {});
+            ).formLogin(form -> form
+                        .loginPage("/login")
+                        .loginProcessingUrl("/login")
+                        .usernameParameter("email")
+                        .passwordParameter("password")
+                        .defaultSuccessUrl("/home/home-page", true)
+                        .failureUrl("/login?error=true")
+                        .permitAll()
+                ).logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/?logout=true")
+                        .permitAll());
 
         return http.build();
     }
