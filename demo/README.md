@@ -1,37 +1,36 @@
 # Spring Boot Authentication Demo
 
-A small Spring Boot application that demonstrates user registration, role persistence, and HTTP Basic authentication backed by MySQL.
+A small Spring Boot application for learning user registration, role-based authorization, and database-backed form authentication. Users are stored in MySQL, and passwords are encoded with BCrypt before persistence.
 
-## Technology Stack
+## Stack
 
 - Java 21
 - Spring Boot 3.5.16
-- Spring Web
-- Spring Data JPA
+- Spring MVC and Thymeleaf
 - Spring Security
+- Spring Data JPA
 - MySQL
 - Lombok
 - Maven Wrapper
 
-## Prerequisites
+## Requirements
 
 - JDK 21
 - MySQL Server
-- A MySQL database named `-----`
 
-Create the database before starting the application:
+Create the database configured in `src/main/resources/application.properties`:
 
 ```sql
-CREATE DATABASE ----;
+CREATE DATABASE testing;
 ```
 
-Update `src/main/resources/application.properties` with your local database username and password. Do not commit real credentials to source control.
+Before starting the app, update the datasource URL, username, and password for your local MySQL installation. Keep real credentials out of source control; environment variables or a local, ignored properties file are safer choices.
 
-The application is configured to use port `7777`.
+The default server port is `7777`.
 
-## Running the Application
+## Run Locally
 
-From the project directory:
+From the directory containing `pom.xml`:
 
 ### Windows PowerShell
 
@@ -45,87 +44,59 @@ From the project directory:
 ./mvnw spring-boot:run
 ```
 
-The application is available at:
+Open [http://localhost:7777/login](http://localhost:7777/login) after the application starts.
 
-```text
-http://localhost:7777
+Run the test suite with:
+
+```powershell
+.\mvnw.cmd clean test
 ```
 
-To build and test the project:
+On macOS/Linux, use `./mvnw clean test`.
+
+## Authentication Flow
+
+1. Open `/register-user` and create a user account.
+2. Sign in at `/login` with the registered email and password.
+3. After a successful login, Spring Security redirects to `/home/home-page`.
+4. Log out with `POST /logout`.
+
+The login form uses `email` and `password` fields. Authentication is session-based form login, not HTTP Basic authentication.
+
+## Routes and Roles
+
+| Method | Route | Access | Purpose |
+| --- | --- | --- | --- |
+| `GET` | `/login` | Public | Display the login page |
+| `GET` | `/register-user` | Public | Display the registration page |
+| `POST` | `/register-user` | Public | Create a `USER` account |
+| `GET` | `/home/home-page` | Public | Display the home response |
+| `POST` | `/home/register-admin` | Public | Create an `ADMIN` account from a JSON request |
+| `GET` | `/user/user-home` | `USER`, `ADMIN` | Display the user response |
+| `GET` | `/admin/admin-home` | `ADMIN` | Display the admin response |
+| `POST` | `/logout` | Authenticated | End the current session |
+
+Create an admin account with a request such as:
 
 ```bash
-./mvnw clean test
+curl -X POST http://localhost:7777/home/register-admin \
+  -H "Content-Type: application/json" \
+  -d '{"fullname":"Alex Admin","email":"admin@example.com","password":"change-me"}'
 ```
 
-On Windows, use `mvnw.cmd` instead of `./mvnw`.
+## Security Notes
 
-## API Endpoints
+This is a learning project, not a production-ready authentication service. CSRF protection is disabled in the current configuration, and the admin registration endpoint is publicly accessible. Before deploying, enable CSRF protection where appropriate, restrict admin creation, use HTTPS, validate inputs, and externalize secrets.
 
-### Public endpoints
-
-`GET /home/home-page`
-
-Returns a home page message.
-
-`POST /home/register-user`
-
-Registers a user with the `USER` role. Example request body:
-
-```json
-{
-  "fullname": "Jane User",
-  "email": "jane@example.com",
-  "password": "change-me"
-}
-```
-
-`POST /home/register-admin`
-
-Registers a user with the `ADMIN` role. Example request body:
-
-```json
-{
-  "fullname": "Alex Admin",
-  "email": "admin@example.com",
-  "password": "change-me"
-}
-```
-
-Passwords are encoded with BCrypt before they are stored.
-
-### Authenticated endpoints
-
-Use HTTP Basic authentication with the registered email as the username and the original password.
-
-`GET /user/user-home`
-
-Returns the user page message.
-
-`GET /admin/admin-home`
-
-Returns the admin page message.
-
-Example with cURL:
-
-```bash
-curl -u jane@example.com:change-me http://localhost:7777/user/user-home
-```
-
-## Security Note
-
-CSRF protection is disabled and HTTP Basic authentication is enabled for this demo. Do not expose this configuration directly to the public internet without adding HTTPS, CSRF protection where appropriate, stronger account controls, and secure secret management.
-
-The controller paths are `/user/**` and `/admin/**`, while the role-specific matchers in `SecurityConfig` currently target `/api/v1/user/**` and `/api/v1/admin/**`. As a result, the role-specific authorization rules do not currently match these controller endpoints; requests fall through to the general authenticated rule. Align the matcher paths with the controller paths if role-based access enforcement is required.
-
-## Project Structure
+## Project Layout
 
 ```text
 src/main/java/SpringBoot_Auth/demo/
-├── Config/       Security configuration
-├── Controller/   HTTP endpoints
-├── Entity/       User and role JPA models
+├── Config/       Spring Security configuration
+├── Controller/   Web and REST endpoints
+├── Entity/       User and role JPA entities
 ├── Repository/   Spring Data repositories
-└── Service/      Registration and user lookup logic
+└── Service/      Registration and user lookup services
 ```
 
-The default test verifies that the Spring application context loads successfully.
+The default test checks that the Spring application context loads successfully.
