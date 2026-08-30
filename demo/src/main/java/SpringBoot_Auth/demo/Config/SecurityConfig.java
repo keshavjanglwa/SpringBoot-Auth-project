@@ -6,12 +6,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import SpringBoot_Auth.demo.Service.CustomSuccessHandler;
 import SpringBoot_Auth.demo.Service.CustomUserDetailsService;
 
 @Configuration
@@ -20,6 +20,8 @@ public class SecurityConfig {
 
     @Autowired
     private CustomUserDetailsService userDetalisService;
+    @Autowired
+    private CustomSuccessHandler customSuccessHandler;
     
     @Bean 
     public PasswordEncoder passwordEncoder(){
@@ -48,7 +50,7 @@ public class SecurityConfig {
                         .loginProcessingUrl("/login")
                         .usernameParameter("email")
                         .passwordParameter("password")
-                        .defaultSuccessUrl("/home/home-page", true)
+                        .successHandler(customSuccessHandler)
                         .failureUrl("/login?error=true")
                         .permitAll()
                 ).logout(logout -> logout
