@@ -12,6 +12,7 @@ public class UserController {
     public String UserHome(){
         return "YOU ARE IN THE USER PAGE";
     }
+    
 }
 
 

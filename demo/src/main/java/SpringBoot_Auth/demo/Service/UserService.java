@@ -34,8 +34,4 @@ public class UserService {
         admin.setRole(Role.ADMIN);
         return userRepo.save(admin);
     }
-
-    public Optional<User> findEmail(String email){
-        return userRepo.findByEmail(email);
-    } 
 }

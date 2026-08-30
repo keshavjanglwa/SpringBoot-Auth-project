@@ -24,7 +24,6 @@ public class CustomSuccessHandler extends SavedRequestAwareAuthenticationSuccess
         } else {
             getRedirectStrategy().sendRedirect(request, response, "/user/user-home");
         }
-        super.onAuthenticationSuccess(request, response, authentication);
     }
 
 }
