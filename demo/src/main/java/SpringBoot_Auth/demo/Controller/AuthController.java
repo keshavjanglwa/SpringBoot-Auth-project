@@ -40,8 +40,7 @@ public class AuthController {
                             @RequestParam String email,
                             @RequestParam String password,
                             @RequestParam String confirmPassword,
-                            RedirectAttributes redirectAttributes) {
-
+                            RedirectAttributes redirectAttributes ) {
             userService.registerNewUser(fullName, email, password);
             return "redirect:/login";
     }

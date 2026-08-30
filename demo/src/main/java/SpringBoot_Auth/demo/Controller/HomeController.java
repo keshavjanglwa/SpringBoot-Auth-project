@@ -35,7 +35,7 @@ public class HomeController {
  
     @GetMapping("/home-page")
     public String HomePage(){
-        return "YOU ARE IN THE HOME PAGE";
+        return "home";
     } 
     @PostMapping("/register-admin")
     public String registerAdmin(@RequestBody User admin){
@@ -63,8 +63,7 @@ public class HomeController {
         model.addAttribute("token", "YOUR TOKEN IS : " + token);
 
         return "forgot-password";
-    }
-
+    }    
     @GetMapping("/reset-password")
     public String resertpassword() {
         return "reset-password";
