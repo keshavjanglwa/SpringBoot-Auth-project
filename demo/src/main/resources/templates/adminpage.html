@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Page</title>
+  <link th:href="@{/css/styles.css}" href="styles.css" rel="stylesheet">
+</head>
+
+<body>
+  <div class="stage">
+
+    <div class="badge admin">
+      <div class="stripe"></div>
+      <div class="role">Admin<br>Clearance</div>
+      <div class="id">ROLE · ADMIN</div>
+      <div class="barcode"></div>
+    </div>
+
+    <div class="eyebrow admin"><span class="dot"></span> ADMIN CONSOLE</div>
+
+    <div class="card">
+      <div class="icon-ring" style="border-color: rgba(181,118,31,0.35);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#B5761F" stroke-width="1.6" stroke-linecap="round"
+          stroke-linejoin="round">
+          <path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"></path>
+          <path d="M9.5 12l1.8 1.8L14.5 10"></path>
+        </svg>
+      </div>
+
+      <h1>Admin Page</h1>
+      <p class="sub">Welcome, <span th:text="${username}">admin</span>! Only admins can see this.</p>
+
+      <div class="actions">
+        <a class="btn" href="/home/home-page">Home <span class="arrow">→</span></a>
+        <a class="btn" href="/user/user-home">User Page <span class="arrow">→</span></a>
+        <a class="btn logout" href="/logout">Logout</a>
+      </div>
+
+      <div class="perf"></div>
+    </div>
+
+  </div>
+</body>
+
+</html>

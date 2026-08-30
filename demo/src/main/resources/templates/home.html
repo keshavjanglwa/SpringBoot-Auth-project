@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Home</title>
+  <link th:href="@{/css/styles.css}" href="styles.css" rel="stylesheet">
+</head>
+
+<body>
+  <div class="stage">
+
+    <div class="badge">
+      <div class="stripe"></div>
+      <div class="role">Visitor<br>Pass</div>
+      <div class="id">NO-ROLE · TEMP</div>
+      <div class="barcode"></div>
+    </div>
+
+    <div class="eyebrow"><span class="dot"></span> ACCESS PORTAL</div>
+
+    <div class="card">
+      <div class="icon-ring">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#8B97B5" stroke-width="1.6" stroke-linecap="round"
+          stroke-linejoin="round">
+          <path d="M3 11.5 12 4l9 7.5"></path>
+          <path d="M5 10v9a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1v-9"></path>
+        </svg>
+      </div>
+
+      <h1>Welcome to the Home Page</h1>
+      <p class="sub">Sign in with your credentials to reach your workspace, or create an account to get started.</p>
+
+      <div th:if="${role} == null">
+        <p class="sub" style="margin-bottom:18px;">Please sign up or log in to continue.</p>
+
+        <div class="actions">
+          <a class="btn primary" href="/register-user">Sign Up <span class="arrow">→</span></a>
+          <a class="btn" href="/login">Login <span class="arrow">→</span></a>
+        </div>
+
+        <div class="perf"></div>
+
+        <div class="actions">
+          <a class="btn" href="/user/user-home" sec:authorize="hasRole('USER')">
+            Go to user home <span class="arrow">→</span>
+          </a>
+          <a class="btn admin" href="/admin/admin-home" sec:authorize="hasRole('ADMIN')">
+            Go to admin home <span class="arrow">→</span>
+          </a>
+          <a class="btn" href="/user/user-home" sec:authorize="hasRole('ADMIN')">
+            
+            Go to user home <span class="arrow">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</body>
+
+</html>
