@@ -8,6 +8,10 @@
 <body>
 
     <h2>Login</h2>
+        <div class="alert alert-error" style="color: red;"th:if="${param.error}">
+        Invalid username or password, or your account is disabled/locked.
+    </div>
+
     <form th:action="@{/login}" method="post">
 
         <label>Email</label><br>
@@ -21,9 +25,6 @@
         <p>Dont have an account? <a href="/register-user">Sign up</a></p>
         <p>Forgot password ? <a href="/home/forgot-password">Forgot password</a></p>
 
-    <div th:if="${param.error}">
-        Invalid Email or Password
-    </div>
     <div th:if="${param.logout}">
         Logged out successfully
     </div>

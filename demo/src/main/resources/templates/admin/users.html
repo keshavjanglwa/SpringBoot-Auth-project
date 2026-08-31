@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - All Users</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <div class="top-bar">
+        <h1>User Management</h1>
+        <div>
+            <span sec:authentication="name" style="margin-right:15px;color:#555;"></span>
+            <form th:action="@{/logout}" method="post" style="display:inline;">
+                <button type="submit" class="btn btn-gray">Logout</button>
+            </form>
+        </div>
+    </div>
+
+    <a class="btn btn-blue" th:href="@{/admin/users/add}">+ Add New User</a>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Lock</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.id}">1</td>
+            <td th:text="${user.email}">username</td>
+            <td th:text="${user.role}">USER</td>
+            <td>
+                <span class="badge badge-green" th:if="${user.enabled}">ACTIVE</span>
+                <span class="badge badge-red" th:unless="${user.enabled}">DEACTIVATED</span>
+            </td>
+            <!-- <td>
+                <span class="badge badge-green" th:if="${user.accountNonLocked}">UNLOCKED</span>
+                <span class="badge badge-orange" th:unless="${user.accountNonLocked}">LOCKED</span>
+            </td> -->
+            <td>
+                <!-- Activate / Deactivate -->
+                <form th:action="@{/admin/users/{id}/toggle-status(id=${user.id})}" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-red" th:if="${user.enabled}">Deactivate</button>
+                    <button type="submit" class="btn btn-green" th:unless="${user.enabled}">Activate</button>
+                </form>
+
+                <!-- Lock / Unlock -->
+                <!-- <form th:action="@{/admin/users/{id}/toggle-lock(id=${user.id})}" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-orange" th:if="${user.accountNonLocked}">Lock</button>
+                    <button type="submit" class="btn btn-blue" th:unless="${user.accountNonLocked}">Unlock</button>
+                </form> -->
+
+                <!-- Delete -->
+                <form th:action="@{/admin/users/{id}/delete(id=${user.id})}" method="post" style="display:inline;"
+                      onsubmit="return confirm('Delete this user?');">
+                    <button type="submit" class="btn btn-gray">Delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

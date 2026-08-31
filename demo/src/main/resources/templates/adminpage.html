@@ -34,7 +34,11 @@
       <div class="actions">
         <a class="btn" href="/home/home-page">Home <span class="arrow">→</span></a>
         <a class="btn" href="/user/user-home">User Page <span class="arrow">→</span></a>
-        <a class="btn logout" href="/logout">Logout</a>
+        <a class="btn" href="/admin/users/add">Add User <span class="arrow">→</span></a>
+        <a class="btn" href="/admin/users">Manage Users <span class="arrow">→</span></a>
+            <form th:action="@{/logout}" method="post" style="display:inline;">
+                <button type="submit" class="btn logout">Logout</button>
+            </form>
       </div>
 
       <div class="perf"></div>

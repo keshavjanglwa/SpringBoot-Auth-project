@@ -53,11 +53,10 @@ public class SecurityConfig {
                         .successHandler(customSuccessHandler)
                         .failureUrl("/login?error=true")
                         .permitAll()
-                ).logout(logout -> logout
+                       ).logout(logout -> logout
                         .logoutUrl("/logout")
-                        .logoutSuccessUrl("/?logout=true")
+                        .logoutSuccessUrl("/login?logout=true")
                         .permitAll());
-
         return http.build();
     }
  

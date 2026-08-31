@@ -25,10 +25,10 @@ public class User {
     private LocalDate evenDate;
     private String token;
     private LocalDateTime restTokenExpiry;
+    private boolean enabled = true;
     
     @Enumerated(EnumType.STRING)
-    private Role role ;
-
+    private Role role ; 
 
     
 }

@@ -34,7 +34,9 @@
 
       <div class="actions">
         <a class="btn" href="/home/home-page">Home <span class="arrow">→</span></a>
-        <a class="btn logout" href="/logout">Logout</a>
+            <form th:action="@{/logout}" method="post" style="display:inline;">
+                <button type="submit" class="btn logout">Logout</button>
+            </form>
       </div>
     </div>
 
