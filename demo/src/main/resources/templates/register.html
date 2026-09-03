@@ -10,6 +10,7 @@
 <section class="section">
     <div class="form-card">
         <h2>Create Your Account</h2>
+        <div th:if="${error}" class="alert" style="color: red;" th:text="${error}"></div><br><br>
 
         <form th:action="@{/register-user}" method="post">
             <div class="form-group">

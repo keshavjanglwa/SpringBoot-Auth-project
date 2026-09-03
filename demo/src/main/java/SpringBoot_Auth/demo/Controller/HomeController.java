@@ -52,7 +52,7 @@ public class HomeController {
     public String forgetpassword(@RequestParam String email, Model model) {
         User user = userRepo.findByEmail(email);
         if (user == null) {
-            model.addAttribute("error", "Email not found ");
+            model.addAttribute("message", "User with this email does not exist");
             return "forgot-password";
         }
         String token = UUID.randomUUID().toString();
@@ -66,15 +66,14 @@ public class HomeController {
     }    
     @GetMapping("/reset-password")
     public String resertpassword() {
-        return "reset-password";
-        
+        return "reset-password"; 
     }
 
     @PostMapping("reset-password")
     public String resetPassword(@RequestParam String token, @RequestParam String password, Model model) {
         User user = userRepo.findByToken(token);
         if (user == null) {
-            model.addAttribute("message", "invalid Token");
+            model.addAttribute("message", "Invalid Token");
             return "reset-password";
         }
         if (user.getRestTokenExpiry().isBefore(LocalDateTime.now())) {

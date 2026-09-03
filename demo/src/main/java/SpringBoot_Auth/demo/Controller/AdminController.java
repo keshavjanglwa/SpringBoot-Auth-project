@@ -46,8 +46,8 @@ public class AdminController {
                            @RequestParam String password,
                            Model model) {
 
-        if (userRepo.existsByEmail(email)) {
-            model.addAttribute("error", "Username already exists!");
+        if (userRepo.existsByEmail(email)) { 
+            model.addAttribute("error", "Email already exists!");
             model.addAttribute("user", new User());
             return "admin/add-user";
         }
@@ -70,16 +70,6 @@ public class AdminController {
         userRepo.save(user);
         return "redirect:/admin/users";
     }
-
-    // // Lock / Unlock a user's account
-    // @PostMapping("/users/{id}/toggle-lock")
-    // public String toggleLock(@PathVariable Long id) {
-    //     User user = userRepo.findById(id)
-    //             .orElseThrow(() -> new IllegalArgumentException("User not found: " + id));
-    //     user.setAccountNonLocked(!user.isAccountNonLocked());
-    //     userRepository.save(user);
-    //     return "redirect:/admin/users";
-    // }
 
     @PostMapping("/users/{id}/delete")
     public String deleteUser(@PathVariable Long id) {
